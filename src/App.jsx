@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
-import { Sparkles, Activity, Layers, ArrowDown, Menu, X, Wind, Zap, Brain, Smartphone } from 'lucide-react';
+import { ArrowDown, Menu } from 'lucide-react';
 
 /* === WABI-SABI TECH LP ===
   Design System:
@@ -127,10 +127,6 @@ const VerticalText = ({ children, className = "" }) => (
 // --- Sections ---
 
 const Hero = () => {
-  const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 500], [0, 200]);
-  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
-
   return (
     <section className="relative h-screen w-full flex flex-col justify-center items-center overflow-hidden">
       {/* Background Ink Effect */}
@@ -143,7 +139,7 @@ const Hero = () => {
         />
       </div>
 
-      <motion.div style={{ y: y1, opacity }} className="z-10 text-center px-6">
+      <div className="z-10 text-center px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -230,13 +226,27 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 2, delay: 1.5 }}
-          className="text-xs sm:text-sm md:text-lg text-[#666666] font-light max-w-lg mx-auto font-sans leading-relaxed px-4"
+          className="text-xs sm:text-sm md:text-lg text-[#666666] font-light max-w-lg mx-auto font-sans leading-relaxed px-4 mt-6 sm:mt-8 md:mt-10"
         >
           あなたの中の武士道を呼び起こす。<br className="hidden sm:block" />
           今日から始める武士道ジャーナル習慣。<br className="hidden sm:block" />
           本物の侍は書くところから始まる。
         </motion.p>
-      </motion.div>
+
+        {/* App Screenshot */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.5, delay: 2 }}
+          className="mt-6 sm:mt-8 md:mt-10 flex justify-center px-4"
+        >
+          <img 
+            src="/page1.png" 
+            alt="Bushido Habit App Screenshot" 
+            className="max-w-full h-auto rounded-lg shadow-lg w-64 sm:w-72 md:w-80"
+          />
+        </motion.div>
+      </div>
 
       {/* Scroll Indicator */}
       <motion.div 
@@ -260,6 +270,16 @@ const Hero = () => {
 const Concept = () => {
   return (
     <section className="relative py-20 sm:py-32 md:py-48 px-4 sm:px-6 md:px-20 overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0 opacity-10 md:opacity-15 pointer-events-none z-0 overflow-hidden">
+        <img 
+          src="/samuraiminarai.png" 
+          alt="Samurai background" 
+          className="w-full h-full object-cover samurai-bg md:object-center"
+          style={{ mixBlendMode: 'multiply' }}
+        />
+      </div>
+      
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start justify-between relative z-10">
         
         {/* Vertical Title */}
@@ -326,95 +346,31 @@ const Concept = () => {
   );
 };
 
-const FeatureCard = ({ title, desc, icon: Icon, index }) => {
-  return (
-    <FadeIn delay={index * 0.2} direction="up" className="w-full">
-      <div className="group relative bg-[#FCFAF2] p-6 sm:p-8 md:p-12 border border-[#E5E5E5] active:border-[#D4AF37]/50 md:hover:border-[#D4AF37]/50 transition-colors duration-700 ease-out h-full">
-        <div className="absolute top-4 right-4 sm:top-6 sm:right-6 opacity-20 md:group-hover:opacity-100 md:group-hover:text-[#165E83] transition-all duration-500">
-          <Icon size={20} strokeWidth={1} className="sm:w-6 sm:h-6" />
-        </div>
-        
-        <div className="mb-6 sm:mb-8 overflow-hidden">
-          <span className="text-xs font-sans tracking-widest text-[#888888] block mb-2">0{index + 1}</span>
-          <h3 className="text-xl sm:text-2xl font-serif text-[#2B2B2B]">{title}</h3>
-        </div>
-        
-        <p className="text-[#666] font-sans text-xs sm:text-sm leading-relaxed opacity-80 md:group-hover:opacity-100 transition-opacity duration-500">
-          {desc}
-        </p>
-
-        {/* Hover Effect Line */}
-        <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#165E83] md:group-hover:w-full transition-all duration-700 ease-in-out" />
-      </div>
-    </FadeIn>
-  );
-};
-
-const Features = () => {
-  const features = [
-    {
-      title: "静かなレイヤー",
-      desc: "情報を整理する間、AIが自動的に読み取り、分類・整理。あなたは「集中」することだけに集中できます。",
-      icon: Layers
-    },
-    {
-      title: "時間軸の流れ",
-      desc: "過去、現在、未来を視覚化するタイムライン。禅寺の庭石のように、重要な瞬間を優雅に表現します。",
-      icon: Activity
-    },
-    {
-      title: "静寂の空間",
-      desc: "雑念のノイズを消し去り、集中のリズムへ。瞑想の静けさに似た、デジタルの温かさを感じてください。",
-      icon: Wind
-    }
-  ];
-
-  return (
-    <section className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-20 bg-[#F5F5F0]">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-12 sm:mb-20 text-center md:text-left">
-          <FadeIn>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif text-[#2B2B2B] mb-3 sm:mb-4">機能を超え、本質を語る。</h2>
-            <p className="text-xs sm:text-sm text-[#888888] font-sans tracking-wide">FUNCTIONALITY IN SILENCE</p>
-          </FadeIn>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {features.map((f, i) => (
-            <FeatureCard key={i} {...f} index={i} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
 const BushidoPowers = () => {
   const powers = [
     {
       number: "1",
       title: '毎日の"侍ジャーナリング"',
-      desc: "日々の記録を、7つの武士道の観点でAIが分析。甘くない、核心を突くアドバイス。"
+      desc: "日々の記録を、7つの武士道の観点でAIが分析。甘くない、核心を突くアドバイス。",
+      image: "/page3.png"
     },
     {
       number: "2",
       title: "7つの徳のスキルツリー",
-      desc: "誠・義・勇・仁・礼・忠義・名誉。日々の言動があなたの徳を上下させ、キャラクターとして積み上がる。"
+      desc: "誠・義・勇・仁・礼・忠義・名誉。日々の言動があなたの徳を上下させ、キャラクターとして積み上がる。",
+      image: "/page4.png"
     },
     {
       number: "3",
-      title: "AI評価（プレミアム）",
-      desc: "侍の指南役。曖昧な励ましではなく、成長のための厳しい指摘が届く。"
-    },
-    {
-      number: "4",
-      title: '週次の"武士レポート"',
-      desc: '7徳の伸び・弱点・改善点を総合分析。あなたの内面の変化を"見える化"。'
+      title: "AI師範評価",
+      desc: "侍の指南役。曖昧な励ましではなく、成長のための厳しい指摘が届く。",
+      image: "/page5.png"
     },
     {
       number: "5",
       title: "ランクアップシステム",
-      desc: '農民 → 足軽 → 侍見習い → 侍 → 武士頭 → 大名 → 将軍。習慣化が"戦い"になり、毎日がゲームになる。'
+      desc: '農民 → 足軽 → 侍見習い → 侍 → 武士頭 → 大名 → 将軍。習慣化が"戦い"になり、毎日がゲームになる。',
+      image: "/shogun.png"
     }
   ];
 
@@ -433,7 +389,7 @@ const BushidoPowers = () => {
           {powers.map((power, i) => (
             <FadeIn key={i} delay={i * 0.15} direction="up">
               <div className="bg-[#F5F5F0] border border-[#E5E5E5] p-6 sm:p-8 md:p-10 hover:border-[#165E83]/30 transition-colors duration-500">
-                <div className="flex items-start gap-4 sm:gap-6">
+                <div className="flex flex-col md:flex-row items-start gap-4 sm:gap-6">
                   <div className="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 bg-[#2B2B2B] text-[#FCFAF2] rounded-full flex items-center justify-center font-serif font-bold text-lg sm:text-xl">
                     {power.number}
                   </div>
@@ -441,9 +397,18 @@ const BushidoPowers = () => {
                     <h3 className="text-lg sm:text-xl md:text-2xl font-serif text-[#2B2B2B] mb-3 sm:mb-4">
                       {power.title}
                     </h3>
-                    <p className="text-sm sm:text-base text-[#666] font-sans leading-relaxed">
+                    <p className="text-sm sm:text-base text-[#666] font-sans leading-relaxed mb-4">
                       {power.desc}
                     </p>
+                    {power.image && (
+                      <div className="mt-4 flex justify-center md:justify-start">
+                        <img
+                          src={power.image}
+                          alt={power.title}
+                          className="max-w-full h-auto rounded-lg shadow-md w-full sm:w-auto sm:max-w-md md:max-w-lg"
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -557,41 +522,6 @@ const Benefit = () => {
                   <span className="text-xl sm:text-2xl font-serif">{item.label}</span>
                 </div>
                 <span className="text-[10px] tracking-[0.3em] opacity-50">{item.sub}</span>
-              </div>
-            </FadeIn>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const TechSpec = () => {
-  const specs = [
-    { title: "Context AI", desc: "文脈を理解する知能", icon: Brain },
-    { title: "WebGL Core", desc: "滑らかな動きの実現", icon: Zap },
-    { title: "Zero Latency", desc: "無駄のないレスポンス", icon: Smartphone },
-  ];
-
-  return (
-    <section className="py-16 sm:py-24 px-4 sm:px-6 md:px-20 border-b border-[#E5E5E5]">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
-        <div className="md:w-1/3 mb-8 sm:mb-12 md:mb-0">
-          <FadeIn direction="right">
-            <h2 className="text-2xl sm:text-3xl font-sans font-medium text-[#2B2B2B] mb-4 sm:mb-6">
-              見えない技術で、<br />美しさを生む。
-            </h2>
-            <div className="w-12 sm:w-16 h-[2px] bg-[#165E83]"></div>
-          </FadeIn>
-        </div>
-
-        <div className="md:w-2/3 grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 w-full">
-          {specs.map((s, i) => (
-            <FadeIn key={i} delay={i * 0.2} direction="up">
-              <div className="flex flex-col items-start p-4 sm:p-6 md:hover:bg-gray-50 transition-colors rounded-sm">
-                <s.icon className="w-6 h-6 sm:w-8 sm:h-8 text-[#888888] mb-3 sm:mb-4 stroke-1" />
-                <h3 className="text-base sm:text-lg font-sans font-bold text-[#2B2B2B] mb-2">{s.title}</h3>
-                <p className="text-xs sm:text-sm text-[#666666]">{s.desc}</p>
               </div>
             </FadeIn>
           ))}
@@ -735,7 +665,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className={`min-h-screen bg-[#FCFAF2] text-[#2B2B2B] selection:bg-[#165E83] selection:text-white transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+    <div className={`min-h-screen bg-[#FCFAF2] text-[#2B2B2B] selection:bg-[#165E83] selection:text-white transition-opacity duration-1000 overflow-x-hidden ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
       
       {/* Global Styles for Vertical Writing & Fonts */}
       <style>{`
@@ -766,11 +696,9 @@ export default function App() {
       <main className="relative z-10">
         <Hero />
         <Concept />
-        <Features />
         <BushidoPowers />
         <BeforeAfter />
         <Benefit />
-        <TechSpec />
         <Pricing />
         <CTA />
       </main>

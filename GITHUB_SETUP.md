@@ -68,3 +68,5 @@ GitHubのPersonal Access Tokenを使用してください：
 3. 必要な権限（repo）を選択
 4. トークンをコピーして、パスワードの代わりに入力
 
+
+
