@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef, createContext, useContext } from 'react';
 import { motion, useScroll, useTransform, useSpring, useInView, AnimatePresence } from 'framer-motion';
-import { ArrowDown, Menu, X, Globe } from 'lucide-react';
+import { ArrowDown, Menu, X, Globe, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Routes, Route, Link } from 'react-router-dom';
 import Privacy from './Privacy';
+import Terms from './Terms';
 
 // Language Context
 export const LanguageContext = createContext();
@@ -63,11 +65,17 @@ export const translations = {
       ]
     },
     benefit: {
-      title: "集中し、深める。",
-      description: "デジタルデバイスの時代において、心の静けさを求めること。\n集中すべき瞬間に意識を向ける静寂な美しさで、\nあなたのプロダクティビティと精神的健康に貢献します。",
-      align: "整列",
-      focus: "集中",
-      quiet: "静寂"
+      title: "7つの徳を身につける旅",
+      description: "武士道の7つの徳を日々の実践を通じて身につけていく。\n誠・義・勇・仁・礼・忠義・名誉。\nそれぞれの徳があなたの人格を形作り、真の侍へと導く。",
+      virtues: [
+        { name: "誠", reading: "まこと", meaning: "Makoto", description: "誠実さと真実性。言葉と行動の一致。" },
+        { name: "義", reading: "ぎ", meaning: "Gi", description: "正義と道義。正しいことを行う勇気。" },
+        { name: "勇", reading: "ゆう", meaning: "Yu", description: "勇気と胆力。困難に立ち向かう強さ。" },
+        { name: "仁", reading: "じん", meaning: "Jin", description: "慈愛と思いやり。他者への優しさ。" },
+        { name: "礼", reading: "れい", meaning: "Rei", description: "礼儀と敬意。他者への尊重。" },
+        { name: "忠義", reading: "ちゅうぎ", meaning: "Chugi", description: "忠誠と献身。主君への忠義。" },
+        { name: "名誉", reading: "めいよ", meaning: "Meyo", description: "名誉と尊厳。誇り高い行動。" }
+      ]
     },
     pricing: {
       title: "コーヒー1杯分で、あなたの\"生き方\"が変わる。",
@@ -75,9 +83,7 @@ export const translations = {
         name: "無料プラン",
         price: "無料",
         features: [
-          "無制限ジャーナリング",
-          "7徳スコアの可視化",
-          "基本ステータス表示"
+          "ジャーナリング保存機能"
         ]
       },
       premium: {
@@ -86,9 +92,10 @@ export const translations = {
         period: "月額",
         badge: "おすすめ",
         features: [
+          "無制限のジャーナリング",
+          "ジャーナル保存機能",
           'AIによる"武士道評価"',
           "7徳の深掘りコーチング",
-          "週次の武士レポート",
           "ランクアップ強化"
         ]
       },
@@ -162,6 +169,56 @@ export const translations = {
         title: "第10条（完全免責）",
         content: "適用される法律が許す最大限の範囲において、当方は、プライバシー、データ保護、情報の取り扱いに関連するあらゆる責任から完全に免責されます。ユーザーは、本アプリの利用により、プライバシーに関するリスクを完全に自己の責任において負うものとします。"
       }
+    },
+    terms: {
+      title: "利用規約",
+      back: "ホームに戻る",
+      lastUpdated: "最終更新日: 2024年12月1日",
+      article1: {
+        title: "第1条（適用）",
+        content: "本規約は、武士道ジャーナル（以下「本アプリ」）の利用条件を定めるものです。本アプリをダウンロード、インストール、または利用することにより、ユーザーは本規約のすべての条項に同意したものとみなされます。本規約に同意できない場合は、本アプリの利用を中止するものとします。"
+      },
+      article2: {
+        title: "第2条（利用目的）",
+        content: "本アプリは、ユーザーが日々の行動や思考を記録し、武士道の7つの徳に基づいて自己成長を支援することを目的としています。ただし、当方は、本アプリの利用によりユーザーが達成する結果について、いかなる保証も行いません。"
+      },
+      article3: {
+        title: "第3条（利用者の責任と義務）",
+        content: "ユーザーは、本アプリの利用にあたり、以下の事項を遵守するものとします。違反により生じた損害について、当方は一切の責任を負いません。",
+        items: [
+          "本アプリの目的に反する利用をしないこと",
+          "他人の権利（著作権、肖像権、プライバシー権等を含む）を侵害しないこと",
+          "法令および公序良俗に反する行為をしないこと",
+          "本アプリの機能を不正に改変、逆コンパイル、またはリバースエンジニアリングしないこと",
+          "本アプリを使用して違法行為、詐欺行為、またはその他の不正行為を行わないこと",
+          "本アプリのサーバーまたはネットワークに不正にアクセスしないこと",
+          "本アプリの利用により生じたすべての結果について、完全に自己の責任を負うこと"
+        ]
+      },
+      article4: {
+        title: "第4条（データの取り扱いと完全免責）",
+        content: "本アプリで入力、保存、または処理されたすべてのデータについて、当方は一切の責任を負いません。データの消失、破損、改ざん、不正アクセス、漏洩、削除、またはその他のデータに関する問題により生じた損害について、当方は完全に免責されます。データのバックアップ、保護、管理は、完全にユーザーの責任において行うものとします。当方は、データの安全性、完全性、または可用性について、いかなる保証も行いません。"
+      },
+      article5: {
+        title: "第5条（知的財産権）",
+        content: "本アプリのコンテンツ、ソフトウェア、デザイン、商標、ロゴ、その他の知的財産権は、当方または正当な権利者に帰属します。ユーザーは、これらの知的財産権を侵害してはならず、侵害により生じた損害について、当方に対して完全に補償する責任を負います。"
+      },
+      article6: {
+        title: "第6条（完全免責）",
+        content: "当方は、本アプリの利用によりユーザーに生じた直接的、間接的、特別、結果的、懲罰的、または偶発的な損害（データの消失、利益の喪失、機会損失、ビジネス中断、使用不能、情報の損失、またはその他の金銭的損失を含むがこれに限定されない）について、その原因が契約違反、不法行為、過失、厳格責任、その他の法的理論のいかんを問わず、一切の責任を負いません。本アプリは「現状のまま」「利用可能な限り」提供され、明示的または黙示的ないかなる保証もありません。"
+      },
+      article7: {
+        title: "第7条（サービスの中断・終了）",
+        content: "当方は、事前の通知なく、いつでも本アプリの全部または一部の提供を中断、終了、変更、修正、または削除する権利を有します。これによりユーザーに生じたあらゆる損害について、当方は一切の責任を負いません。"
+      },
+      article8: {
+        title: "第8条（規約の変更）",
+        content: "当方は、事前の通知なく、いつでも本規約を変更することができます。変更後の規約は、本アプリ上に表示した時点から効力を生じるものとします。変更後の規約に同意できない場合は、本アプリの利用を中止するものとします。"
+      },
+      article9: {
+        title: "第9条（準拠法と管轄）",
+        content: "本規約は、日本法に準拠して解釈されます。本規約に関する紛争については、当方の所在地を管轄する裁判所を第一審の専属的合意管轄裁判所とします。"
+      }
     }
   },
   en: {
@@ -219,11 +276,17 @@ export const translations = {
       ]
     },
     benefit: {
-      title: "Focus, deepen.",
-      description: "In the age of digital devices, seeking peace of mind.\nThe quiet beauty of directing consciousness to moments that require focus\ncontributes to your productivity and mental health.",
-      align: "ALIGN",
-      focus: "FOCUS",
-      quiet: "QUIET"
+      title: "The Journey of 7 Virtues",
+      description: "Master the 7 virtues of Bushido through daily practice.\nSincerity, Justice, Courage, Benevolence, Respect, Loyalty, Honor.\nEach virtue shapes your character and guides you to become a true samurai.",
+      virtues: [
+        { name: "誠", reading: "Makoto", meaning: "Sincerity", description: "Honesty and truthfulness. Alignment of words and actions." },
+        { name: "義", reading: "Gi", meaning: "Justice", description: "Righteousness and morality. Courage to do what is right." },
+        { name: "勇", reading: "Yu", meaning: "Courage", description: "Bravery and valor. Strength to face difficulties." },
+        { name: "仁", reading: "Jin", meaning: "Benevolence", description: "Compassion and mercy. Kindness toward others." },
+        { name: "礼", reading: "Rei", meaning: "Respect", description: "Politeness and courtesy. Respect for others." },
+        { name: "忠義", reading: "Chugi", meaning: "Loyalty", description: "Loyalty and devotion. Fidelity to one's lord." },
+        { name: "名誉", reading: "Meyo", meaning: "Honor", description: "Honor and dignity. Proud and noble actions." }
+      ]
     },
     pricing: {
       title: "Change your \"way of life\" for the price of a cup of coffee.",
@@ -231,9 +294,7 @@ export const translations = {
         name: "Free Plan",
         price: "Free",
         features: [
-          "Unlimited journaling",
-          "7 Virtues score visualization",
-          "Basic status display"
+          "Journal saving feature"
         ]
       },
       premium: {
@@ -242,9 +303,10 @@ export const translations = {
         period: "monthly",
         badge: "Recommended",
         features: [
+          "Unlimited journaling",
+          "Journal saving feature",
           "AI \"Bushido Evaluation\"",
           "Deep coaching on 7 Virtues",
-          "Weekly samurai report",
           "Rank up enhancement"
         ]
       },
@@ -318,6 +380,56 @@ export const translations = {
         title: "Article 10 (Complete Disclaimer)",
         content: "To the maximum extent permitted by applicable law, we are completely exempt from all liability related to privacy, data protection, and information handling. Users assume all risks related to privacy entirely at their own responsibility through use of this app."
       }
+    },
+    terms: {
+      title: "Terms of Service",
+      back: "Back to Home",
+      lastUpdated: "Last Updated: December 1, 2024",
+      article1: {
+        title: "Article 1 (Application)",
+        content: "These Terms govern the use of Bushido Journal (hereinafter referred to as \"this App\"). By downloading, installing, or using this App, users are deemed to have agreed to all provisions of these Terms. If you do not agree to these Terms, you must discontinue use of this App."
+      },
+      article2: {
+        title: "Article 2 (Purpose of Use)",
+        content: "This App is intended to help users record their daily actions and thoughts, and support self-growth based on the 7 virtues of Bushido. However, we make no guarantees regarding the results users achieve through use of this App."
+      },
+      article3: {
+        title: "Article 3 (User Responsibilities and Obligations)",
+        content: "Users must comply with the following matters when using this App. We assume no responsibility for any damage caused by violations.",
+        items: [
+          "Not to use this App in a manner contrary to its purpose",
+          "Not to infringe upon the rights of others (including copyright, portrait rights, privacy rights, etc.)",
+          "Not to engage in acts that violate laws or public order and morals",
+          "Not to illegally modify, decompile, or reverse engineer the functions of this App",
+          "Not to use this App to commit illegal acts, fraud, or other wrongful acts",
+          "Not to illegally access the servers or networks of this App",
+          "To bear complete responsibility for all consequences arising from use of this App"
+        ]
+      },
+      article4: {
+        title: "Article 4 (Data Handling and Complete Disclaimer)",
+        content: "We assume no responsibility whatsoever for all data entered, saved, or processed in this App. We are completely exempt from liability for any damage caused by data loss, corruption, tampering, unauthorized access, leakage, deletion, or other data-related issues. Backup, protection, and management of data must be performed entirely at the user's own responsibility. We make no guarantees regarding the security, integrity, or availability of data."
+      },
+      article5: {
+        title: "Article 5 (Intellectual Property Rights)",
+        content: "All intellectual property rights in the content, software, design, trademarks, logos, and other elements of this App belong to us or the rightful owners. Users must not infringe upon these intellectual property rights and bear full responsibility for compensating us for any damage caused by infringement."
+      },
+      article6: {
+        title: "Article 6 (Complete Disclaimer)",
+        content: "We assume no responsibility for any direct, indirect, special, consequential, punitive, or incidental damages (including but not limited to data loss, loss of profits, loss of opportunity, business interruption, unavailability, loss of information, or other financial losses) arising from use of this App, regardless of whether the cause is breach of contract, tort, negligence, strict liability, or other legal theory. This App is provided \"as is\" and \"as available\" without any express or implied warranties."
+      },
+      article7: {
+        title: "Article 7 (Service Interruption and Termination)",
+        content: "We reserve the right to interrupt, terminate, modify, amend, or delete all or part of this App at any time without prior notice. We assume no responsibility for any damage caused to users as a result."
+      },
+      article8: {
+        title: "Article 8 (Amendment of Terms)",
+        content: "We may change these Terms at any time without prior notice. The amended Terms take effect from the time they are displayed on this App. If you do not agree to the amended Terms, you must discontinue use of this App."
+      },
+      article9: {
+        title: "Article 9 (Governing Law and Jurisdiction)",
+        content: "These Terms shall be interpreted in accordance with Japanese law. Any disputes regarding these Terms shall be subject to the exclusive jurisdiction of the court having jurisdiction over our location as the court of first instance."
+      }
     }
   },
   es: {
@@ -375,11 +487,17 @@ export const translations = {
       ]
     },
     benefit: {
-      title: "Enfócate, profundiza.",
-      description: "En la era de los dispositivos digitales, buscando paz mental.\nLa belleza silenciosa de dirigir la conciencia a momentos que requieren enfoque\ncontribuye a tu productividad y salud mental.",
-      align: "ALINEAR",
-      focus: "ENFOQUE",
-      quiet: "SILENCIO"
+      title: "El Viaje de las 7 Virtudes",
+      description: "Domina las 7 virtudes del Bushido a través de la práctica diaria.\nSinceridad, Justicia, Coraje, Benevolencia, Respeto, Lealtad, Honor.\nCada virtud moldea tu carácter y te guía para convertirte en un verdadero samurái.",
+      virtues: [
+        { name: "誠", reading: "Makoto", meaning: "Sinceridad", description: "Honestidad y veracidad. Alineación de palabras y acciones." },
+        { name: "義", reading: "Gi", meaning: "Justicia", description: "Rectitud y moralidad. Coraje para hacer lo correcto." },
+        { name: "勇", reading: "Yu", meaning: "Coraje", description: "Valentía y valor. Fuerza para enfrentar dificultades." },
+        { name: "仁", reading: "Jin", meaning: "Benevolencia", description: "Compasión y misericordia. Bondad hacia los demás." },
+        { name: "礼", reading: "Rei", meaning: "Respeto", description: "Cortesía y educación. Respeto por los demás." },
+        { name: "忠義", reading: "Chugi", meaning: "Lealtad", description: "Lealtad y devoción. Fidelidad a su señor." },
+        { name: "名誉", reading: "Meyo", meaning: "Honor", description: "Honor y dignidad. Acciones orgullosas y nobles." }
+      ]
     },
     pricing: {
       title: "Cambia tu \"forma de vida\" por el precio de una taza de café.",
@@ -387,9 +505,7 @@ export const translations = {
         name: "Plan Gratuito",
         price: "Gratis",
         features: [
-          "Diario ilimitado",
-          "Visualización de puntuación de 7 Virtudes",
-          "Visualización de estado básico"
+          "Función de guardado de diario"
         ]
       },
       premium: {
@@ -398,9 +514,10 @@ export const translations = {
         period: "mensual",
         badge: "Recomendado",
         features: [
+          "Diario ilimitado",
+          "Función de guardado de diario",
           "Evaluación \"Bushido\" por IA",
           "Coaching profundo en 7 Virtudes",
-          "Informe semanal de samurái",
           "Mejora de subida de rango"
         ]
       },
@@ -473,6 +590,56 @@ export const translations = {
       article10: {
         title: "Artículo 10 (Exención Completa de Responsabilidad)",
         content: "En la máxima medida permitida por la ley aplicable, estamos completamente exentos de toda responsabilidad relacionada con la privacidad, la protección de datos y el manejo de información. Los usuarios asumen todos los riesgos relacionados con la privacidad completamente bajo su propia responsabilidad a través del uso de esta aplicación."
+      }
+    },
+    terms: {
+      title: "Términos de Servicio",
+      back: "Volver al Inicio",
+      lastUpdated: "Última actualización: 1 de diciembre de 2024",
+      article1: {
+        title: "Artículo 1 (Aplicación)",
+        content: "Estos Términos rigen el uso de Bushido Journal (en adelante denominado \"esta Aplicación\"). Al descargar, instalar o usar esta Aplicación, los usuarios se consideran que han aceptado todas las disposiciones de estos Términos. Si no está de acuerdo con estos Términos, debe discontinuar el uso de esta Aplicación."
+      },
+      article2: {
+        title: "Artículo 2 (Propósito de Uso)",
+        content: "Esta Aplicación tiene como objetivo ayudar a los usuarios a registrar sus acciones y pensamientos diarios, y apoyar el crecimiento personal basado en las 7 virtudes del Bushido. Sin embargo, no hacemos garantías con respecto a los resultados que los usuarios logren a través del uso de esta Aplicación."
+      },
+      article3: {
+        title: "Artículo 3 (Responsabilidades y Obligaciones del Usuario)",
+        content: "Los usuarios deben cumplir con los siguientes asuntos al usar esta Aplicación. No asumimos responsabilidad por ningún daño causado por violaciones.",
+        items: [
+          "No usar esta Aplicación de manera contraria a su propósito",
+          "No infringir los derechos de otros (incluidos derechos de autor, derechos de imagen, derechos de privacidad, etc.)",
+          "No participar en actos que violen las leyes o el orden público y las buenas costumbres",
+          "No modificar ilegalmente, descompilar o hacer ingeniería inversa de las funciones de esta Aplicación",
+          "No usar esta Aplicación para cometer actos ilegales, fraude u otros actos ilícitos",
+          "No acceder ilegalmente a los servidores o redes de esta Aplicación",
+          "Asumir completa responsabilidad por todas las consecuencias derivadas del uso de esta Aplicación"
+        ]
+      },
+      article4: {
+        title: "Artículo 4 (Manejo de Datos y Exención Completa de Responsabilidad)",
+        content: "No asumimos responsabilidad alguna por todos los datos ingresados, guardados o procesados en esta Aplicación. Estamos completamente exentos de responsabilidad por cualquier daño causado por pérdida de datos, corrupción, manipulación, acceso no autorizado, filtración, eliminación u otros problemas relacionados con datos. La copia de seguridad, protección y gestión de datos deben realizarse completamente bajo la propia responsabilidad del usuario. No hacemos garantías con respecto a la seguridad, integridad o disponibilidad de los datos."
+      },
+      article5: {
+        title: "Artículo 5 (Derechos de Propiedad Intelectual)",
+        content: "Todos los derechos de propiedad intelectual sobre el contenido, software, diseño, marcas comerciales, logotipos y otros elementos de esta Aplicación pertenecen a nosotros o a los propietarios legítimos. Los usuarios no deben infringir estos derechos de propiedad intelectual y asumen plena responsabilidad de compensarnos por cualquier daño causado por la infracción."
+      },
+      article6: {
+        title: "Artículo 6 (Exención Completa de Responsabilidad)",
+        content: "No asumimos responsabilidad por ningún daño directo, indirecto, especial, consecuente, punitivo o incidental (incluidos pero no limitados a pérdida de datos, pérdida de ganancias, pérdida de oportunidades, interrupción comercial, indisponibilidad, pérdida de información u otras pérdidas financieras) que surjan del uso de esta Aplicación, independientemente de si la causa es incumplimiento de contrato, agravio, negligencia, responsabilidad estricta u otra teoría legal. Esta Aplicación se proporciona \"tal cual\" y \"según disponibilidad\" sin garantías expresas o implícitas."
+      },
+      article7: {
+        title: "Artículo 7 (Interrupción y Terminación del Servicio)",
+        content: "Nos reservamos el derecho de interrumpir, terminar, modificar, enmendar o eliminar toda o parte de esta Aplicación en cualquier momento sin previo aviso. No asumimos responsabilidad por ningún daño causado a los usuarios como resultado."
+      },
+      article8: {
+        title: "Artículo 8 (Modificación de los Términos)",
+        content: "Podemos cambiar estos Términos en cualquier momento sin previo aviso. Los Términos modificados entran en vigor desde el momento en que se muestran en esta Aplicación. Si no está de acuerdo con los Términos modificados, debe discontinuar el uso de esta Aplicación."
+      },
+      article9: {
+        title: "Artículo 9 (Ley Aplicable y Jurisdicción)",
+        content: "Estos Términos se interpretarán de acuerdo con la ley japonesa. Cualquier disputa relacionada con estos Términos estará sujeta a la jurisdicción exclusiva del tribunal que tenga jurisdicción sobre nuestra ubicación como tribunal de primera instancia."
       }
     }
   }
@@ -706,7 +873,7 @@ const Hero = () => {
     : t.hero.title.split(' ');
 
   return (
-    <section className="relative h-screen w-full flex flex-col justify-center items-center overflow-hidden">
+    <section className="relative min-h-screen w-full flex flex-col justify-center items-center overflow-x-hidden py-12 sm:py-16 md:py-20">
       {/* Background Ink Effect */}
       <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
         <motion.div 
@@ -717,7 +884,7 @@ const Hero = () => {
         />
       </div>
 
-      <div className="z-10 text-center px-6">
+      <div className="z-10 text-center px-6 w-full max-w-7xl mx-auto flex flex-col items-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -782,6 +949,42 @@ const Hero = () => {
             className="max-w-full h-auto rounded-lg shadow-lg w-64 sm:w-72 md:w-80"
           />
         </motion.div>
+
+        {/* Badge SVGs */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.5, delay: 2.3 }}
+          className="mt-4 sm:mt-6 md:mt-8 mb-16 sm:mb-20 md:mb-24 flex justify-center items-center gap-4 sm:gap-6 px-4 flex-wrap"
+        >
+          {language === 'ja' ? (
+            <>
+              <img 
+                src="/jp-butch.svg" 
+                alt="Japanese Badge" 
+                className="h-8 sm:h-10 md:h-12 w-auto max-w-[120px] sm:max-w-[150px] md:max-w-[180px]"
+              />
+              <img 
+                src="/google-jp-butch.svg" 
+                alt="Google Japanese Badge" 
+                className="h-8 sm:h-10 md:h-12 w-auto max-w-[120px] sm:max-w-[150px] md:max-w-[180px]"
+              />
+            </>
+          ) : (
+            <>
+              <img 
+                src="/ua-butch.svg" 
+                alt="Ukrainian Badge" 
+                className="h-8 sm:h-10 md:h-12 w-auto max-w-[120px] sm:max-w-[150px] md:max-w-[180px]"
+              />
+              <img 
+                src="/google-ua-butch.svg" 
+                alt="Google Ukrainian Badge" 
+                className="h-8 sm:h-10 md:h-12 w-auto max-w-[120px] sm:max-w-[150px] md:max-w-[180px]"
+              />
+            </>
+          )}
+        </motion.div>
       </div>
 
       {/* Scroll Indicator */}
@@ -789,7 +992,7 @@ const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.5, duration: 1 }}
-        className="absolute bottom-8 sm:bottom-12 flex flex-col items-center gap-2"
+        className="absolute bottom-4 sm:bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20"
       >
         <span className="text-[10px] tracking-widest uppercase text-[#888888] hidden sm:block">{t.hero.scroll}</span>
         <motion.div 
@@ -1035,11 +1238,44 @@ const BeforeAfter = () => {
 const Benefit = () => {
   const language = useContext(LanguageContext);
   const t = translations[language] || translations.ja;
-  const benefitItems = [
-    { label: language === 'ja' ? "整列" : (language === 'en' ? "ALIGN" : "ALINEAR"), sub: t.benefit.align },
-    { label: language === 'ja' ? "集中" : (language === 'en' ? "FOCUS" : "ENFOQUE"), sub: t.benefit.focus },
-    { label: language === 'ja' ? "静寂" : (language === 'en' ? "QUIET" : "SILENCIO"), sub: t.benefit.quiet }
-  ];
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const virtues = t.benefit.virtues || [];
+
+  const nextVirtue = () => {
+    setCurrentIndex((prev) => (prev + 1) % virtues.length);
+  };
+
+  const prevVirtue = () => {
+    setCurrentIndex((prev) => (prev - 1 + virtues.length) % virtues.length);
+  };
+
+  // タッチ/スワイプ対応
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    if (isLeftSwipe) {
+      nextVirtue();
+    }
+    if (isRightSwipe) {
+      prevVirtue();
+    }
+  };
 
   return (
     <section className="py-20 sm:py-32 bg-[#1A1A1A] text-[#F5F5F0] relative overflow-hidden">
@@ -1050,15 +1286,15 @@ const Benefit = () => {
           <h2 className="text-3xl sm:text-4xl md:text-6xl font-sans font-bold mb-8 sm:mb-12 tracking-tight">
             {language === 'ja' ? (
               <>
-                集中し、<span className="text-[#165E83]">深める。</span>
+                7つの徳を<span className="text-[#165E83]">身につける旅</span>
               </>
             ) : language === 'en' ? (
               <>
-                Focus, <span className="text-[#165E83]">deepen.</span>
+                The Journey of <span className="text-[#165E83]">7 Virtues</span>
               </>
             ) : (
               <>
-                Enfócate, <span className="text-[#165E83]">profundiza.</span>
+                El Viaje de las <span className="text-[#165E83]">7 Virtudes</span>
               </>
             )}
           </h2>
@@ -1081,16 +1317,66 @@ const Benefit = () => {
           </p>
         </FadeIn>
 
-        <div className="flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-16">
-          {benefitItems.map((item, i) => (
-            <FadeIn key={i} delay={0.4 + (i * 0.1)} direction="up">
-              <div className="flex flex-col items-center group cursor-default">
-                <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-full border border-[#F5F5F0]/20 flex items-center justify-center mb-3 sm:mb-4 md:group-hover:border-[#165E83]/80 md:group-hover:scale-105 transition-all duration-500">
-                  <span className="text-xl sm:text-2xl font-serif">{item.label}</span>
+        {/* スライドコンテナ */}
+        <div className="relative">
+          <div 
+            className="overflow-hidden"
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+          >
+            <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+              {virtues.map((virtue, index) => (
+                <div key={index} className="min-w-full flex-shrink-0 px-4">
+                  <FadeIn delay={0.1} direction="up">
+                    <div className="flex flex-col items-center">
+                      <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full border-2 border-[#F5F5F0]/30 flex flex-col items-center justify-center mb-6 sm:mb-8 transition-all duration-500 hover:border-[#165E83]/80 hover:scale-105">
+                        <span className="text-4xl sm:text-5xl md:text-6xl font-serif mb-2">{virtue.name}</span>
+                        <span className="text-sm sm:text-base text-[#165E83] opacity-80">{virtue.reading}</span>
+                        {language !== 'ja' && (
+                          <span className="text-xs sm:text-sm opacity-60 mt-1">{virtue.meaning}</span>
+                        )}
+                      </div>
+                      <p className="text-base sm:text-lg md:text-xl font-serif leading-relaxed max-w-2xl opacity-90 px-4">
+                        {virtue.description}
+                      </p>
+                    </div>
+                  </FadeIn>
                 </div>
-                <span className="text-[10px] tracking-[0.3em] opacity-50">{item.sub}</span>
-              </div>
-            </FadeIn>
+              ))}
+            </div>
+          </div>
+
+          {/* ナビゲーションボタン */}
+          <button
+            onClick={prevVirtue}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 sm:-translate-x-8 md:-translate-x-12 p-2 sm:p-3 rounded-full bg-[#F5F5F0]/10 hover:bg-[#F5F5F0]/20 transition-all duration-300 active:scale-95 touch-manipulation"
+            aria-label="Previous"
+          >
+            <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8 text-[#F5F5F0]" />
+          </button>
+          <button
+            onClick={nextVirtue}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 sm:translate-x-8 md:translate-x-12 p-2 sm:p-3 rounded-full bg-[#F5F5F0]/10 hover:bg-[#F5F5F0]/20 transition-all duration-300 active:scale-95 touch-manipulation"
+            aria-label="Next"
+          >
+            <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8 text-[#F5F5F0]" />
+          </button>
+        </div>
+
+        {/* インジケーター */}
+        <div className="flex justify-center gap-2 mt-8 sm:mt-12">
+          {virtues.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
+                index === currentIndex 
+                  ? 'bg-[#165E83] w-8 sm:w-10' 
+                  : 'bg-[#F5F5F0]/30 hover:bg-[#F5F5F0]/50'
+              }`}
+              aria-label={`Go to virtue ${index + 1}`}
+            />
           ))}
         </div>
       </div>
@@ -1124,7 +1410,7 @@ const Pricing = () => {
                 </div>
                 <div className="w-12 h-[2px] bg-[#888888] mt-4"></div>
               </div>
-              <ul className="space-y-4 mb-6 sm:mb-8">
+              <ul className="space-y-4">
                 {t.pricing.free.features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <span className="text-[#888888] mt-1">✓</span>
@@ -1132,9 +1418,6 @@ const Pricing = () => {
                   </li>
                 ))}
               </ul>
-              <button className="w-full py-3 sm:py-4 bg-transparent border border-[#2B2B2B] text-[#2B2B2B] font-sans tracking-widest text-xs sm:text-sm transition-all duration-500 ease-out active:bg-[#2B2B2B] active:text-[#FCFAF2] md:hover:bg-[#2B2B2B] md:hover:text-[#FCFAF2] touch-manipulation">
-                {t.pricing.cta.free}
-              </button>
             </div>
           </FadeIn>
 
@@ -1152,7 +1435,7 @@ const Pricing = () => {
                 </div>
                 <div className="w-12 h-[2px] bg-[#165E83] mt-4"></div>
               </div>
-              <ul className="space-y-4 mb-6 sm:mb-8">
+              <ul className="space-y-4">
                 {t.pricing.premium.features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <span className="text-[#165E83] mt-1 font-bold">✓</span>
@@ -1160,9 +1443,6 @@ const Pricing = () => {
                   </li>
                 ))}
               </ul>
-              <button className="w-full py-3 sm:py-4 bg-[#165E83] text-[#FCFAF2] font-sans tracking-widest text-xs sm:text-sm transition-all duration-500 ease-out active:bg-[#2B2B2B] md:hover:bg-[#2B2B2B] touch-manipulation">
-                {t.pricing.cta.premium}
-              </button>
             </div>
           </FadeIn>
         </div>
@@ -1187,18 +1467,65 @@ const CTA = () => {
           ))}
         </p>
         
-        <div className="relative inline-block group">
-          <button className="relative overflow-hidden px-8 sm:px-12 py-3 sm:py-4 bg-transparent border border-[#2B2B2B] text-[#2B2B2B] font-sans tracking-widest text-xs sm:text-sm transition-all duration-500 ease-out active:bg-[#165E83] active:text-[#FCFAF2] md:group-hover:text-[#FCFAF2] min-h-[44px] touch-manipulation">
-            <span className="relative z-10">{t.cta.button}</span>
-            <div className="absolute inset-0 bg-[#165E83] transform scale-x-0 md:group-hover:scale-x-100 transition-transform duration-500 origin-left ease-[0.22, 1, 0.36, 1]"></div>
-          </button>
+        <div className="flex justify-center items-center gap-4 sm:gap-6 px-4 flex-wrap">
+          {language === 'ja' ? (
+            <>
+              <a 
+                href="#" 
+                className="inline-block transition-transform duration-300 hover:scale-105 active:scale-95 touch-manipulation"
+                aria-label="App Storeからダウンロード"
+              >
+                <img 
+                  src="/jp-butch.svg" 
+                  alt="App Storeからダウンロード" 
+                  className="h-10 sm:h-12 md:h-14 w-auto max-w-[150px] sm:max-w-[180px] md:max-w-[200px]"
+                />
+              </a>
+              <a 
+                href="#" 
+                className="inline-block transition-transform duration-300 hover:scale-105 active:scale-95 touch-manipulation"
+                aria-label="Google Playで手に入れよう"
+              >
+                <img 
+                  src="/google-jp-butch.svg" 
+                  alt="Google Playで手に入れよう" 
+                  className="h-10 sm:h-12 md:h-14 w-auto max-w-[150px] sm:max-w-[180px] md:max-w-[200px]"
+                />
+              </a>
+            </>
+          ) : (
+            <>
+              <a 
+                href="#" 
+                className="inline-block transition-transform duration-300 hover:scale-105 active:scale-95 touch-manipulation"
+                aria-label="Download from App Store"
+              >
+                <img 
+                  src="/ua-butch.svg" 
+                  alt="Download from App Store" 
+                  className="h-10 sm:h-12 md:h-14 w-auto max-w-[150px] sm:max-w-[180px] md:max-w-[200px]"
+                />
+              </a>
+              <a 
+                href="#" 
+                className="inline-block transition-transform duration-300 hover:scale-105 active:scale-95 touch-manipulation"
+                aria-label="Get it on Google Play"
+              >
+                <img 
+                  src="/google-ua-butch.svg" 
+                  alt="Get it on Google Play" 
+                  className="h-10 sm:h-12 md:h-14 w-auto max-w-[150px] sm:max-w-[180px] md:max-w-[200px]"
+                />
+              </a>
+            </>
+          )}
         </div>
       </FadeIn>
     </section>
   );
 };
 
-const Footer = ({ onPrivacyClick }) => {
+const Footer = () => {
   const language = useContext(LanguageContext);
   const t = translations[language] || translations.ja;
 
@@ -1206,8 +1533,8 @@ const Footer = ({ onPrivacyClick }) => {
     <footer className="py-8 px-6 md:px-20 bg-[#FCFAF2] flex flex-col md:flex-row justify-between items-center text-[10px] text-[#888888] tracking-wider uppercase border-t border-[#E5E5E5]">
       <div className="mb-4 md:mb-0">&copy; 2024 WabiTech Inc.</div>
       <div className="flex gap-6">
-        <button onClick={onPrivacyClick} className="hover:text-[#2B2B2B] transition-colors cursor-pointer">{t.footer.privacy}</button>
-        <a href="#" className="hover:text-[#2B2B2B] transition-colors">{t.footer.terms}</a>
+        <Link to="/privacy" className="hover:text-[#2B2B2B] transition-colors cursor-pointer">{t.footer.privacy}</Link>
+        <Link to="/terms" className="hover:text-[#2B2B2B] transition-colors cursor-pointer">{t.footer.terms}</Link>
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSczMF-1jaDlX4VRx0erjc3EFjNFosbw0ESn0HFq-HAtTvoysw/viewform?usp=header" target="_blank" rel="noopener noreferrer" className="hover:text-[#2B2B2B] transition-colors">{t.footer.contact}</a>
       </div>
     </footer>
@@ -1216,7 +1543,7 @@ const Footer = ({ onPrivacyClick }) => {
 
 // --- Main App ---
 
-const HomePage = ({ onPrivacyClick, language, onLanguageChange }) => {
+const HomePage = ({ language, onLanguageChange }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -1285,33 +1612,38 @@ const HomePage = ({ onPrivacyClick, language, onLanguageChange }) => {
           <CTA />
         </main>
 
-        <Footer onPrivacyClick={onPrivacyClick} />
+        <Footer />
       </div>
     </LanguageContext.Provider>
   );
 };
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState('home');
   const [language, setLanguage] = useState('ja');
 
-  if (currentPage === 'privacy') {
-    return (
-      <LanguageContext.Provider value={language}>
-        <Privacy 
-          onBackClick={() => setCurrentPage('home')}
-          onLanguageChange={setLanguage}
-        />
-      </LanguageContext.Provider>
-    );
-  }
-
   return (
-    <HomePage 
-      onPrivacyClick={() => setCurrentPage('privacy')}
-      language={language}
-      onLanguageChange={setLanguage}
-    />
+    <Routes>
+      <Route 
+        path="/" 
+        element={<HomePage language={language} onLanguageChange={setLanguage} />} 
+      />
+      <Route 
+        path="/privacy" 
+        element={
+          <LanguageContext.Provider value={language}>
+            <Privacy onLanguageChange={setLanguage} />
+          </LanguageContext.Provider>
+        } 
+      />
+      <Route 
+        path="/terms" 
+        element={
+          <LanguageContext.Provider value={language}>
+            <Terms onLanguageChange={setLanguage} />
+          </LanguageContext.Provider>
+        } 
+      />
+    </Routes>
   );
 }
 

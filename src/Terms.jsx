@@ -1,12 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Menu, X, Globe } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ArrowLeft, Menu } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { LanguageContext, translations, LanguageMenu } from './App';
 
-const Privacy = ({ onLanguageChange }) => {
+const Terms = ({ onLanguageChange }) => {
   const language = useContext(LanguageContext) || 'ja';
-  const t = translations[language]?.privacy || translations.ja.privacy;
+  const t = translations[language]?.terms || translations.ja.terms;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -118,17 +118,12 @@ const Privacy = ({ onLanguageChange }) => {
             <p className="mb-4 text-sm sm:text-base leading-loose">
               {t.article3.content}
             </p>
-            {t.article3.exceptions && (
-              <ol className="list-decimal list-inside space-y-2 ml-4 text-sm sm:text-base">
-                {t.article3.exceptions.map((exception, i) => (
-                  <li key={i}>{exception}</li>
+            {t.article3.items && (
+              <ol className="list-decimal list-inside space-y-2 ml-4 text-sm sm:text-base mt-4">
+                {t.article3.items.map((item, i) => (
+                  <li key={i} className="mb-2">{item}</li>
                 ))}
               </ol>
-            )}
-            {t.article3.disclaimer && (
-              <p className="mt-4 text-sm sm:text-base leading-loose">
-                {t.article3.disclaimer}
-              </p>
             )}
           </motion.section>
 
@@ -216,24 +211,10 @@ const Privacy = ({ onLanguageChange }) => {
             </p>
           </motion.section>
 
-          <motion.section 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.0 }}
-            className="mb-8 sm:mb-12"
-          >
-            <h2 className="text-xl sm:text-2xl font-serif text-[#2B2B2B] mb-4 sm:mb-6 border-b border-[#E5E5E5] pb-2">
-              {t.article10.title}
-            </h2>
-            <p className="mb-4 text-sm sm:text-base leading-loose">
-              {t.article10.content}
-            </p>
-          </motion.section>
-
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 1.1 }}
+            transition={{ duration: 0.6, delay: 1.0 }}
             className="mt-12 sm:mt-16 pt-8 border-t border-[#E5E5E5] text-sm text-[#888888] text-center"
           >
             {t.lastUpdated}
@@ -244,4 +225,4 @@ const Privacy = ({ onLanguageChange }) => {
   );
 };
 
-export default Privacy;
+export default Terms;
