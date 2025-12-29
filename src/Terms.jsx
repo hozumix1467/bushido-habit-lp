@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { LanguageContext, translations, LanguageMenu } from './App';
 
 const Terms = ({ onLanguageChange }) => {
-  const language = useContext(LanguageContext) || 'ja';
+  const language = useContext(LanguageContext) || 'en';
   const t = translations[language]?.terms || translations.ja.terms;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 

@@ -955,32 +955,61 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.5, delay: 2.3 }}
-          className="mt-4 sm:mt-6 md:mt-8 mb-16 sm:mb-20 md:mb-24 flex justify-center items-center gap-4 sm:gap-6 px-4 flex-wrap"
+          className="mt-4 sm:mt-6 md:mt-8 mb-16 sm:mb-20 md:mb-24 flex justify-center items-center gap-4 sm:gap-6 px-4"
         >
           {language === 'ja' ? (
             <>
               <img 
                 src="/jp-butch.svg" 
                 alt="Japanese Badge" 
-                className="h-8 sm:h-10 md:h-12 w-auto max-w-[120px] sm:max-w-[150px] md:max-w-[180px]"
+                className="h-12 sm:h-16 md:h-20 w-auto max-w-[180px] sm:max-w-[220px] md:max-w-[280px]"
               />
               <img 
                 src="/google-jp-butch.svg" 
                 alt="Google Japanese Badge" 
-                className="h-8 sm:h-10 md:h-12 w-auto max-w-[120px] sm:max-w-[150px] md:max-w-[180px]"
+                className="h-12 sm:h-16 md:h-20 w-auto max-w-[180px] sm:max-w-[220px] md:max-w-[280px] grayscale opacity-50 pointer-events-none"
+              />
+            </>
+          ) : language === 'en' ? (
+            <>
+              <a 
+                href="https://www.bushido-habit.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block transition-transform duration-300 hover:scale-105 active:scale-95 touch-manipulation"
+                aria-label="Download from App Store"
+              >
+                <img 
+                  src="/us-butch.svg" 
+                  alt="US Badge" 
+                  className="h-12 sm:h-16 md:h-20 w-auto max-w-[180px] sm:max-w-[220px] md:max-w-[280px]"
+                />
+              </a>
+              <img 
+                src="/google-ua-butch.svg" 
+                alt="Google US Badge" 
+                className="h-12 sm:h-16 md:h-20 w-auto max-w-[180px] sm:max-w-[220px] md:max-w-[280px] grayscale opacity-50 pointer-events-none"
               />
             </>
           ) : (
             <>
-              <img 
-                src="/ua-butch.svg" 
-                alt="Ukrainian Badge" 
-                className="h-8 sm:h-10 md:h-12 w-auto max-w-[120px] sm:max-w-[150px] md:max-w-[180px]"
-              />
+              <a 
+                href="https://www.bushido-habit.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block transition-transform duration-300 hover:scale-105 active:scale-95 touch-manipulation"
+                aria-label="Download from App Store"
+              >
+                <img 
+                  src="/ua-butch.svg" 
+                  alt="Ukrainian Badge" 
+                  className="h-12 sm:h-16 md:h-20 w-auto max-w-[180px] sm:max-w-[220px] md:max-w-[280px]"
+                />
+              </a>
               <img 
                 src="/google-ua-butch.svg" 
                 alt="Google Ukrainian Badge" 
-                className="h-8 sm:h-10 md:h-12 w-auto max-w-[120px] sm:max-w-[150px] md:max-w-[180px]"
+                className="h-12 sm:h-16 md:h-20 w-auto max-w-[180px] sm:max-w-[220px] md:max-w-[280px] grayscale opacity-50 pointer-events-none"
               />
             </>
           )}
@@ -1143,31 +1172,33 @@ const BushidoPowers = () => {
           </FadeIn>
         </div>
 
-        <div className="space-y-6 sm:space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           {powers.map((power, i) => (
             <FadeIn key={i} delay={i * 0.15} direction="up">
-              <div className="bg-[#F5F5F0] border border-[#E5E5E5] p-6 sm:p-8 md:p-10 hover:border-[#165E83]/30 transition-colors duration-500">
-                <div className="flex flex-col md:flex-row items-start gap-4 sm:gap-6">
-                  <div className="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 bg-[#2B2B2B] text-[#FCFAF2] rounded-full flex items-center justify-center font-serif font-bold text-lg sm:text-xl">
-                    {power.number}
+              <div className="bg-[#F5F5F0] border border-[#E5E5E5] p-6 sm:p-8 md:p-10 hover:border-[#165E83]/30 transition-colors duration-500 h-full flex flex-col">
+                <div className="flex flex-col items-start gap-4 sm:gap-6 flex-1">
+                  <div className="flex items-start gap-4 sm:gap-6 w-full">
+                    <div className="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 bg-[#2B2B2B] text-[#FCFAF2] rounded-full flex items-center justify-center font-serif font-bold text-lg sm:text-xl">
+                      {power.number}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg sm:text-xl md:text-2xl font-serif text-[#2B2B2B] mb-3 sm:mb-4">
+                        {power.title}
+                      </h3>
+                      <p className="text-sm sm:text-base text-[#666] font-sans leading-relaxed mb-4">
+                        {power.desc}
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg sm:text-xl md:text-2xl font-serif text-[#2B2B2B] mb-3 sm:mb-4">
-                      {power.title}
-                    </h3>
-                    <p className="text-sm sm:text-base text-[#666] font-sans leading-relaxed mb-4">
-                      {power.desc}
-                    </p>
-                    {power.image && (
-                      <div className="mt-4 flex justify-center md:justify-start">
-                        <img
-                          src={power.image}
-                          alt={power.title}
-                          className="max-w-full h-auto rounded-lg shadow-md w-full sm:w-auto sm:max-w-md md:max-w-lg"
-                        />
-                      </div>
-                    )}
-                  </div>
+                  {power.image && (
+                    <div className="mt-4 flex justify-center w-full">
+                      <img
+                        src={power.image}
+                        alt={power.title}
+                        className="max-w-full h-auto rounded-lg shadow-md w-full max-w-[200px] sm:max-w-[250px] md:max-w-[280px]"
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             </FadeIn>
@@ -1318,26 +1349,26 @@ const Benefit = () => {
         </FadeIn>
 
         {/* スライドコンテナ */}
-        <div className="relative">
+        <div className="relative w-full">
           <div 
-            className="overflow-hidden"
+            className="overflow-hidden w-full"
             onTouchStart={onTouchStart}
             onTouchMove={onTouchMove}
             onTouchEnd={onTouchEnd}
           >
             <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
               {virtues.map((virtue, index) => (
-                <div key={index} className="min-w-full flex-shrink-0 px-4">
+                <div key={index} className="min-w-full flex-shrink-0 w-full flex items-center justify-center px-4">
                   <FadeIn delay={0.1} direction="up">
-                    <div className="flex flex-col items-center">
+                    <div className="flex flex-col items-center justify-center w-full max-w-full">
                       <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full border-2 border-[#F5F5F0]/30 flex flex-col items-center justify-center mb-6 sm:mb-8 transition-all duration-500 hover:border-[#165E83]/80 hover:scale-105">
-                        <span className="text-4xl sm:text-5xl md:text-6xl font-serif mb-2">{virtue.name}</span>
-                        <span className="text-sm sm:text-base text-[#165E83] opacity-80">{virtue.reading}</span>
+                        <span className="text-4xl sm:text-5xl md:text-6xl font-serif mb-2 text-center">{virtue.name}</span>
+                        <span className="text-sm sm:text-base text-[#165E83] opacity-80 text-center">{virtue.reading}</span>
                         {language !== 'ja' && (
-                          <span className="text-xs sm:text-sm opacity-60 mt-1">{virtue.meaning}</span>
+                          <span className="text-xs sm:text-sm opacity-60 mt-1 text-center">{virtue.meaning}</span>
                         )}
                       </div>
-                      <p className="text-base sm:text-lg md:text-xl font-serif leading-relaxed max-w-2xl opacity-90 px-4">
+                      <p className="text-base sm:text-lg md:text-xl font-serif leading-relaxed max-w-2xl opacity-90 px-2 sm:px-4 text-center w-full">
                         {virtue.description}
                       </p>
                     </div>
@@ -1467,7 +1498,7 @@ const CTA = () => {
           ))}
         </p>
         
-        <div className="flex justify-center items-center gap-4 sm:gap-6 px-4 flex-wrap">
+        <div className="flex justify-center items-center gap-4 sm:gap-6 px-4">
           {language === 'ja' ? (
             <>
               <a 
@@ -1478,45 +1509,71 @@ const CTA = () => {
                 <img 
                   src="/jp-butch.svg" 
                   alt="App Storeからダウンロード" 
-                  className="h-10 sm:h-12 md:h-14 w-auto max-w-[150px] sm:max-w-[180px] md:max-w-[200px]"
+                  className="h-14 sm:h-16 md:h-20 w-auto max-w-[200px] sm:max-w-[240px] md:max-w-[280px]"
                 />
               </a>
-              <a 
-                href="#" 
-                className="inline-block transition-transform duration-300 hover:scale-105 active:scale-95 touch-manipulation"
-                aria-label="Google Playで手に入れよう"
+              <div 
+                className="inline-block cursor-not-allowed"
+                aria-label="Google Playで手に入れよう（開発中）"
               >
                 <img 
                   src="/google-jp-butch.svg" 
-                  alt="Google Playで手に入れよう" 
-                  className="h-10 sm:h-12 md:h-14 w-auto max-w-[150px] sm:max-w-[180px] md:max-w-[200px]"
+                  alt="Google Playで手に入れよう（開発中）" 
+                  className="h-14 sm:h-16 md:h-20 w-auto max-w-[200px] sm:max-w-[240px] md:max-w-[280px] grayscale opacity-50 pointer-events-none"
+                />
+              </div>
+            </>
+          ) : language === 'en' ? (
+            <>
+              <a 
+                href="https://www.bushido-habit.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block transition-transform duration-300 hover:scale-105 active:scale-95 touch-manipulation"
+                aria-label="Download from App Store"
+              >
+                <img 
+                  src="/us-butch.svg" 
+                  alt="Download from App Store" 
+                  className="h-14 sm:h-16 md:h-20 w-auto max-w-[200px] sm:max-w-[240px] md:max-w-[280px]"
                 />
               </a>
+              <div 
+                className="inline-block cursor-not-allowed"
+                aria-label="Get it on Google Play (Coming Soon)"
+              >
+                <img 
+                  src="/google-ua-butch.svg" 
+                  alt="Get it on Google Play (Coming Soon)" 
+                  className="h-14 sm:h-16 md:h-20 w-auto max-w-[200px] sm:max-w-[240px] md:max-w-[280px] grayscale opacity-50 pointer-events-none"
+                />
+              </div>
             </>
           ) : (
             <>
               <a 
-                href="#" 
+                href="https://www.bushido-habit.com/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-block transition-transform duration-300 hover:scale-105 active:scale-95 touch-manipulation"
                 aria-label="Download from App Store"
               >
                 <img 
                   src="/ua-butch.svg" 
                   alt="Download from App Store" 
-                  className="h-10 sm:h-12 md:h-14 w-auto max-w-[150px] sm:max-w-[180px] md:max-w-[200px]"
+                  className="h-14 sm:h-16 md:h-20 w-auto max-w-[200px] sm:max-w-[240px] md:max-w-[280px]"
                 />
               </a>
-              <a 
-                href="#" 
-                className="inline-block transition-transform duration-300 hover:scale-105 active:scale-95 touch-manipulation"
-                aria-label="Get it on Google Play"
+              <div 
+                className="inline-block cursor-not-allowed"
+                aria-label="Get it on Google Play (Coming Soon)"
               >
                 <img 
                   src="/google-ua-butch.svg" 
-                  alt="Get it on Google Play" 
-                  className="h-10 sm:h-12 md:h-14 w-auto max-w-[150px] sm:max-w-[180px] md:max-w-[200px]"
+                  alt="Get it on Google Play (Coming Soon)" 
+                  className="h-14 sm:h-16 md:h-20 w-auto max-w-[200px] sm:max-w-[240px] md:max-w-[280px] grayscale opacity-50 pointer-events-none"
                 />
-              </a>
+              </div>
             </>
           )}
         </div>
@@ -1619,7 +1676,7 @@ const HomePage = ({ language, onLanguageChange }) => {
 };
 
 export default function App() {
-  const [language, setLanguage] = useState('ja');
+  const [language, setLanguage] = useState('en');
 
   return (
     <Routes>

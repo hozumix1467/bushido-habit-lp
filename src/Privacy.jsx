@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { LanguageContext, translations, LanguageMenu } from './App';
 
 const Privacy = ({ onLanguageChange }) => {
-  const language = useContext(LanguageContext) || 'ja';
+  const language = useContext(LanguageContext) || 'en';
   const t = translations[language]?.privacy || translations.ja.privacy;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
